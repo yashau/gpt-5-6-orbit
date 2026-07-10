@@ -16,6 +16,25 @@ The GPT-5.6 family already has a natural division of labor:
 
 Orbit makes that division explicit without forcing every model into every task. Each child receives one deliverable, one acceptance gate, and the artifacts needed for its phase.
 
+## Bounded means bounded
+
+Orbit gives each implementation child one coherent slice, one primary write scope, and focused acceptance checks. Large batches are decomposed before execution.
+
+```text
+Too broad
+  Eight independent pages + repository cleanup + full viewport matrix
+
+Bounded
+  1. Shared shell and styling cleanup
+  2. One related page conversion
+  3. The next independent page slice
+  4. Integrated browser matrix after implementation
+```
+
+Independent slices receive fresh children. A context-heavy child that stops before attempting meaningful work is replaced with a narrower fresh child; its entire conversation is not carried forward.
+
+Orbit does not limit a route to one thread per model. A substantial feature may use several fresh Terra children, each owning a different bounded slice, followed by separate Sol review and Luna verification children. Thread count follows the work; checkout write safety determines whether those children run sequentially or in isolated worktrees.
+
 ## Default routes
 
 ```text
@@ -110,7 +129,9 @@ If these controls are unavailable, Orbit returns the proposed route and stops. I
 - Luna performs deterministic and mechanical work.
 - Only one child writes to a checkout at a time.
 - Dependent phases wait for actual artifacts, not summaries.
-- Corrections stay with the responsible child; responsibility changes create a new child.
+- Small corrections stay with a focused child; independent slices and overloaded contexts get fresh children.
+- Create as many bounded Sol, Terra, and Luna children as the accepted route requires.
+- A premature "cannot finish this turn" response triggers re-slicing, not a false capability blocker.
 - Effort increases only when uncertainty or failure cost justifies it.
 - Deployment is always a separate, explicitly authorized phase.
 

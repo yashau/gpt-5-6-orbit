@@ -19,6 +19,9 @@ Maintain GPT-5.6 Orbit as a concise, original Codex orchestration skill. Preserv
 - Require confirmation before child creation when Orbit was selected only by an incidental implicit match.
 - Keep the exact model IDs centralized in the model-contract table.
 - Never silently substitute models, lower effort, or claim a child ran without evidence.
+- Require one coherent outcome, one primary write scope, focused checks, and explicit exclusions per child slice.
+- Start a fresh child for independent slices, overloaded contexts, and self-stops without meaningful work.
+- Never impose one-thread-per-model or a fixed child-count cap; create as many bounded children as the route requires.
 - Never let skill invocation imply deployment or another external side effect.
 - Keep one writer per checkout and require an integration gate for parallel worktrees.
 - Keep Ultra out of automatic routing until reliable benchmark evidence supports a default.

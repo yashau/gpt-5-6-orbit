@@ -62,15 +62,38 @@ Track the actual route:
 | --- | --- | --- | --- | --- | --- | --- |
 ```
 
+## Bound every child slice
+
+Decompose the Sol plan before creating implementation or closeout children. Call a slice bounded only when it has:
+
+- one coherent capability or mechanical outcome;
+- one primary write scope or declared integration seam;
+- focused acceptance checks that a child can reasonably complete in one turn;
+- explicit exclusions naming adjacent work that remains for later slices.
+
+Split work that combines independent pages, features, or subsystems; mixes broad cleanup with feature conversion; or attaches an exhaustive browser or viewport matrix to a large implementation batch. Do not call a batch bounded merely because one model owns all of it.
+
+Require Sol to produce an execution-slice table for multi-surface work:
+
+```markdown
+| Slice | Owner | Write scope | Inputs | Acceptance | Depends on |
+| --- | --- | --- | --- | --- | --- |
+```
+
+Give each independent slice a fresh child. Run write slices sequentially in one checkout. Use parallel worktrees only when write scopes are disjoint and the integration gate is explicit.
+
+Do not impose one-thread-per-model or a fixed child-count cap. Create one fresh Terra child per bounded implementation slice and as many Sol, Terra, or Luna children as the accepted route requires. Let dependency order and write isolation determine concurrency; do not preserve an overloaded thread merely to reduce thread count.
+
 ## Create and manage child tasks
 
 1. List projects and select the exact project ID for repository work.
 2. Create the child with the exact model ID, effort, prompt, and local or worktree target.
 3. Record the returned task or thread ID before continuing.
 4. Read the child until it reaches a terminal result; creation is not completion.
-5. Send corrections to the same child without model or effort overrides while responsibility remains unchanged.
-6. Create a new child when responsibility moves from Sol to Terra, Terra to Luna, or Luna back to a reasoning tier.
-7. Leave child tasks visible and unarchived unless the user asks otherwise.
+5. Continue the same child only for a small correction to its current slice when its context remains focused and it made a meaningful attempt.
+6. Create a fresh child when a new slice starts, responsibility changes, scope expands materially, the existing context contains unrelated project history, or the child stopped before meaningful work.
+7. Brief a fresh child from canonical artifacts and current repository state. Do not copy the overloaded thread transcript into it.
+8. Leave child tasks visible and unarchived unless the user asks otherwise.
 
 Give each child a self-contained brief:
 
@@ -79,15 +102,27 @@ Role: <one phase responsibility>
 Outcome: <one concrete result>
 Inputs: <paths, revisions, URLs, evidence, and prior artifacts>
 Constraints: <scope, invariants, authority, and forbidden actions>
+Excluded: <adjacent work deliberately left to other slices>
 Acceptance: <checks that prove the phase is complete>
 Return: <artifact, evidence, and unresolved risks>
 ```
 
 Pass actual artifacts forward: plans, diffs, files, test output, commits, or production evidence. Do not replace an artifact with a conversational summary.
 
+## Recover from premature stops
+
+- Do not treat "I cannot finish within this turn" as a code, runtime, or permission blocker.
+- Inspect the child record for tool use, edits, tests, and a concrete handoff.
+- If the child stopped before a meaningful attempt, mark the slice as an orchestration failure, narrow it, and start a fresh child.
+- If useful partial work exists and the slice remains focused, continue the same child with one exact next action and acceptance check.
+- If the stop exposes ambiguity or a bad decomposition, return the evidence to Sol and rebuild the remaining slice table.
+- After two ineffective attempts on one slice, require Sol diagnosis before assigning another implementation child.
+- Never report that a model is unable to do the work solely because a context-heavy child self-stopped.
+- Keep creating fresh bounded children until every accepted slice passes or a concrete external blocker prevents progress.
+
 ## Enforce gates
 
-- Pass a plan only when it names affected surfaces, decisions, risks, acceptance checks, and an integration path.
+- Pass a plan only when it names affected surfaces, decisions, risks, bounded execution slices, acceptance checks, and an integration path.
 - Pass implementation only when requested behavior exists, focused tests pass, and unrelated user changes remain untouched.
 - Pass review only when each actionable finding is fixed and rechecked or rejected with evidence.
 - Pass mechanical closeout only when the exact required checks ran and their results are recorded.
