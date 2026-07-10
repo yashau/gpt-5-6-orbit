@@ -54,9 +54,11 @@ Copy `.agents/skills/gpt-5-6-orbit/` from this repository to:
 
 Codex normally detects skill changes automatically. Restart Codex if it does not appear.
 
+Do not install a second copy under `~/.codex/skills`. Duplicate or legacy copies can make discovery inconsistent.
+
 ## Use
 
-Invoke the skill explicitly:
+Invoke the skill with a skill mention:
 
 ```text
 Use $gpt-5-6-orbit to implement this feature and verify it.
@@ -72,7 +74,22 @@ Use $gpt-5-6-orbit to diagnose this production-only failure, implement a fix, an
 Use $gpt-5-6-orbit to make this mechanical repository-wide change and run the required checks.
 ```
 
-Explicit invocation authorizes the visible child tasks needed by the route. It does not authorize deployment, publication, destructive operations, or other external side effects.
+You can also ask in natural language:
+
+```text
+Use GPT-5.6 Orbit to implement this feature and verify it.
+```
+
+A direct request to use Orbit authorizes the visible child tasks needed by the route. An incidental implicit match does not. Neither form authorizes deployment, publication, destructive operations, or other external side effects.
+
+### Troubleshooting discovery
+
+If Codex says Orbit is unavailable:
+
+1. Confirm the personal copy is at `~/.agents/skills/gpt-5-6-orbit/SKILL.md`.
+2. Remove duplicate copies from legacy locations such as `~/.codex/skills/gpt-5-6-orbit`.
+3. Restart Codex so it rebuilds the skill catalog.
+4. Type `$` and select `gpt-5-6-orbit`, or ask directly to use GPT-5.6 Orbit.
 
 ## Requirements
 

@@ -9,13 +9,14 @@ Maintain GPT-5.6 Orbit as a concise, original Codex orchestration skill. Preserv
 - Treat `.agents/skills/gpt-5-6-orbit/SKILL.md` as the behavioral source of truth.
 - Treat `.agents/skills/gpt-5-6-orbit/references/effort-guide.md` as the source for benchmark numbers and price/performance conclusions.
 - Keep `README.md` aligned with the skill, but do not place instructions there that the running skill requires.
-- Keep `agents/openai.yaml` aligned with the skill name and explicit-invocation policy.
+- Keep `agents/openai.yaml` aligned with the skill name and discovery policy.
 
 ## Required invariants
 
 - Keep only `name` and `description` in `SKILL.md` frontmatter.
 - Keep the skill folder and frontmatter name exactly `gpt-5-6-orbit`.
-- Keep `policy.allow_implicit_invocation` set to `false`.
+- Keep `policy.allow_implicit_invocation` set to `true` so Codex can discover natural-language Orbit requests.
+- Require confirmation before child creation when Orbit was selected only by an incidental implicit match.
 - Keep the exact model IDs centralized in the model-contract table.
 - Never silently substitute models, lower effort, or claim a child ran without evidence.
 - Never let skill invocation imply deployment or another external side effect.
@@ -28,7 +29,7 @@ Maintain GPT-5.6 Orbit as a concise, original Codex orchestration skill. Preserv
 1. Read the complete skill and every reference affected by the change.
 2. Make the smallest coherent update.
 3. Update `README.md` when public behavior or installation changes.
-4. Regenerate `agents/openai.yaml` when the name, description, or default prompt changes; then restore the explicit-invocation policy if needed.
+4. Regenerate `agents/openai.yaml` when the name, description, or default prompt changes; then restore the discovery policy if needed.
 5. Run the skill-creator validator against `.agents/skills/gpt-5-6-orbit`.
 6. Run `git diff --check` and inspect `git diff`.
 7. Forward-test material routing changes on safe, local, non-production tasks.

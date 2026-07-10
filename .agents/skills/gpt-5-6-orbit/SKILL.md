@@ -1,6 +1,6 @@
 ---
 name: gpt-5-6-orbit
-description: "Orchestrate an explicitly invoked engineering task across visible GPT-5.6 child tasks: Sol plans, diagnoses, and reviews; Terra implements and debugs; Luna performs mechanical edits, checks, packaging, and authorized release work. Use when the user invokes $gpt-5-6-orbit or asks to run GPT-5.6 Orbit with model-specific, evidence-gated handoffs."
+description: "Orchestrate engineering work across visible GPT-5.6 child tasks: Sol plans, diagnoses, and reviews; Terra implements and debugs; Luna performs mechanical edits, checks, packaging, and authorized release work. Use when the user invokes $gpt-5-6-orbit or asks to use or run GPT-5.6 Orbit with model-specific, evidence-gated handoffs."
 ---
 
 # GPT-5.6 Orbit
@@ -9,7 +9,8 @@ Coordinate one outcome through the GPT-5.6 family. Keep the invoking task as the
 
 ## Honor the invocation contract
 
-- Treat explicit invocation as authorization to create the visible child tasks required by the route, with the model and effort settings below.
+- Treat a direct Orbit request, whether made through `$gpt-5-6-orbit` or natural language, as authorization to create the visible child tasks required by the route with the model and effort settings below.
+- If Codex loads this skill only because the request implicitly matches its description, present the proposed route and obtain confirmation before creating child tasks.
 - Do not treat invocation as authorization for deployment, publication, destructive changes, purchases, messages, or other external side effects.
 - Use Codex app task or thread tools that accept explicit `model` and `thinking` values. Do not use a generic subagent mechanism when it cannot guarantee the selected model.
 - If the host cannot create and inspect visible children with explicit model and effort controls, present the proposed route and stop. Do not pretend the orbit ran.
