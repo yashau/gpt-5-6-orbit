@@ -16,6 +16,14 @@ Coordinate one outcome through the GPT-5.6 family. Keep the invoking task as the
 - If the host cannot create and inspect visible children with explicit model and effort controls, present the proposed route and stop. Do not pretend the orbit ran.
 - Keep the conductor responsible for scope, state, gates, integration, and the final report.
 
+## Reuse loaded skill context
+
+- Load this `SKILL.md` once when the root Orbit task begins.
+- Do not reread or reinject the skill on routine follow-ups, resumes, corrections, monitoring turns, or child handoffs. Continue from the route ledger and preserved task state.
+- Reread the skill only when starting a different root task, when the user asks to refresh it, when the file changed after the task began, or when context recovery genuinely lost instructions required to proceed safely.
+- Read `references/effort-guide.md` only when choosing a non-default effort or explaining price/performance. Reuse its conclusions for the rest of the task.
+- Never paste the complete skill into a child brief. Pass only the role, slice, constraints, acceptance checks, and artifacts that child needs.
+
 ## Use the model contract
 
 | Responsibility | Model ID | Default effort | Raise effort when |

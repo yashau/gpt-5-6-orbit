@@ -16,6 +16,8 @@ The GPT-5.6 family already has a natural division of labor:
 
 Orbit makes that division explicit without forcing every model into every task. Each child receives one deliverable, one acceptance gate, and the artifacts needed for its phase.
 
+Orbit loads its skill instructions once per root task. Follow-ups, resumes, monitoring turns, and child handoffs reuse the route ledger and preserved state instead of rereading the complete skill. Children receive only the instructions and artifacts needed for their bounded slice.
+
 ## Bounded means bounded
 
 Orbit gives each implementation child one coherent slice, one primary write scope, and focused acceptance checks. Large batches are decomposed before execution.
@@ -129,6 +131,7 @@ If these controls are unavailable, Orbit returns the proposed route and stops. I
 - Luna performs deterministic and mechanical work.
 - Only one child writes to a checkout at a time.
 - Dependent phases wait for actual artifacts, not summaries.
+- Load the skill once per root task; do not spend tokens rereading it on every turn.
 - Small corrections stay with a focused child; independent slices and overloaded contexts get fresh children.
 - Create as many bounded Sol, Terra, and Luna children as the accepted route requires.
 - A premature "cannot finish this turn" response triggers re-slicing, not a false capability blocker.
