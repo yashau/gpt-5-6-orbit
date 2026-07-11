@@ -18,6 +18,8 @@ Orbit makes that division explicit without forcing every model into every task. 
 
 Orbit loads its skill instructions once per root task. Follow-ups, resumes, monitoring turns, and child handoffs reuse the route ledger and preserved state instead of rereading the complete skill. Children receive only the instructions and artifacts needed for their bounded slice.
 
+On Windows, a child that fails before its first command with `CreateProcessAsUserW failed: 5 (Access is denied)` is reported as a Codex child-runner problem, even when every task has Full access. Orbit preserves the route and repository state and recommends restarting Codex before resuming the goal with a fresh child.
+
 ## Bounded means bounded
 
 Orbit gives each implementation child one coherent slice, one primary write scope, and focused acceptance checks. Large batches are decomposed before execution.

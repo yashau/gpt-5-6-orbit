@@ -120,6 +120,9 @@ Pass actual artifacts forward: plans, diffs, files, test output, commits, or pro
 ## Recover from premature stops
 
 - Do not treat "I cannot finish within this turn" as a code, runtime, or permission blocker.
+- Classify a Windows child failure that occurs before its first command, especially `CreateProcessAsUserW failed: 5 (Access is denied)`, as a Codex for Windows child-runner failure rather than a model, repository, or Orbit failure. The child's Full access setting does not prevent a failure during process creation.
+- Report that blocker plainly: state that Codex could not launch the Windows child process, preserve the route and repository state, and recommend restarting Codex before resuming the goal and retrying with a fresh child.
+- Do not suggest that changing Orbit instructions, lowering the model contract, or granting Full access again will repair this process-launch failure.
 - Inspect the child record for tool use, edits, tests, and a concrete handoff.
 - If the child stopped before a meaningful attempt, mark the slice as an orchestration failure, narrow it, and start a fresh child.
 - If useful partial work exists and the slice remains focused, continue the same child with one exact next action and acceptance check.
