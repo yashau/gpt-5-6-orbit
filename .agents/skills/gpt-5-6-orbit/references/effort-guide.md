@@ -4,7 +4,7 @@ Use this reference to choose effort levels, explain routing cost, or evaluate an
 
 ## DeepSWE snapshot
 
-Source: [DeepSWE v1.1 all-effort-levels leaderboard](https://deepswe.datacurve.ai/), observed July 10, 2026; leaderboard updated July 9, 2026. The benchmark contains 113 original long-horizon engineering tasks. All models use the same mini-swe-agent harness.
+Source: [DeepSWE v1.1 all-effort-levels leaderboard](https://deepswe.datacurve.ai/), observed July 25, 2026; leaderboard updated July 25, 2026. The benchmark contains 113 original long-horizon engineering tasks. All models use the same mini-swe-agent harness.
 
 | Model | Effort | Pass@1 | Avg cost | Output tokens | Steps |
 | --- | --- | ---: | ---: | ---: | ---: |
