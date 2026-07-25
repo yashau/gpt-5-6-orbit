@@ -159,3 +159,7 @@ If these controls are unavailable, Orbit returns the proposed route and stops. I
 ## Status
 
 This is an independent community skill built for the GPT-5.6 model family. It is not affiliated with or endorsed by OpenAI or DataCurve.
+
+## License
+
+GPT-5.6 Orbit is available under the [MIT License](LICENSE).
