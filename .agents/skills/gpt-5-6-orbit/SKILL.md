@@ -10,8 +10,9 @@ Coordinate one outcome through the GPT-5.6 family. Keep the invoking task as the
 ## Honor the invocation contract
 
 - Treat a direct Orbit request, whether made through `$gpt-5-6-orbit` or natural language, as authorization to create the visible child tasks required by the route with the model and effort settings below.
+- Treat authorization to change a repository as authorization to create or use an isolated task branch and make scoped local checkpoint commits unless the user says otherwise.
 - If Codex loads this skill only because the request implicitly matches its description, present the proposed route and obtain confirmation before creating child tasks.
-- Do not treat invocation as authorization for deployment, publication, destructive changes, purchases, messages, or other external side effects.
+- Do not treat invocation as authorization for pushing commits, deployment, publication, destructive changes, purchases, messages, or other external side effects.
 - Use Codex app task or thread tools that accept explicit `model` and `thinking` values. Do not use a generic subagent mechanism when it cannot guarantee the selected model.
 - If the host cannot create and inspect visible children with explicit model and effort controls, present the proposed route and stop. Do not pretend the orbit ran.
 - Keep the conductor responsible for scope, state, gates, integration, and the final report.
@@ -40,13 +41,13 @@ Read [references/effort-guide.md](references/effort-guide.md) before deviating f
 
 1. Restate the outcome, acceptance checks, constraints, allowed mutations, and external-action authority.
 2. Confirm the required task tools and the exact Sol, Terra, and Luna model IDs are available. Never silently substitute another model or lower an effort.
-3. Resolve the repository project and record its branch, revision, and pre-existing dirty files. For a non-repository task, use a projectless child target.
+3. Resolve the repository project and record its branch, revision, remote, push authority, and pre-existing dirty files. For a non-repository task, use a projectless child target.
 4. Classify the task:
    - **Mechanical:** the operation and finish line are already known.
    - **Standard:** implementation is clear but requires real coding and tests.
    - **Complex:** architecture, safety, or failure modes require judgment.
    - **Incident:** current evidence must be gathered and the safe path may change.
-5. Make every unauthorized external side effect a separate blocked phase.
+5. Make every unauthorized external side effect a separate blocked or deferred phase. Lack of push authority must not block local implementation and checkpoint commits.
 
 Preflight passes when the finish line is checkable, the starting state is recorded, and the required model controls are available.
 
@@ -92,6 +93,17 @@ Give each independent slice a fresh child. Run write slices sequentially in one 
 
 Do not impose one-thread-per-model or a fixed child-count cap. Create one fresh Terra child per bounded implementation slice and as many Sol, Terra, or Luna children as the accepted route requires. Let dependency order and write isolation determine concurrency; do not preserve an overloaded thread merely to reduce thread count.
 
+## Checkpoint version control
+
+- Keep repository-writing work off `main` and `master` unless the user explicitly asks to work there. If the checkout is already on a non-default task branch intended for the request, keep it. Otherwise create a descriptive `codex/<task-slug>` branch before the first edit.
+- Prefer a branch in the current checkout for the normal sequential route. Use a separate worktree with its own branch only for disjoint parallel write slices or when the current checkout must remain untouched; require an explicit integration gate before accepting worktree output.
+- Preserve pre-existing dirty files. Stage only explicit task paths, inspect the staged diff, and never absorb unrelated user changes into a checkpoint.
+- After each accepted implementation slice or meaningful integrated milestone, run its focused checks, commit the coherent result, and record the commit hash. Do not create empty or knowingly broken commits merely to satisfy a cadence.
+- Make pushing each accepted checkpoint the normal remote cadence after the user explicitly authorizes pushes. Obtain that authority once before the first push when it is absent; continue local work and commits while push remains deferred.
+- On the first push, set the task branch's upstream. Push only the recorded task branch, never force-push, and never push directly to `main` or `master` unless the user explicitly requests it.
+- If authentication, permissions, branch protection, or remote rejection blocks a push, preserve the local commits, record the exact failure, and continue any safe local phases. Do not rewrite history or broaden authority to recover.
+- Treat checkpoint commits and push results as handoff artifacts. For parallel worktrees, integrate and verify on the designated integration branch before committing and pushing the integrated checkpoint.
+
 ## Create and manage child tasks
 
 1. List projects and select the exact project ID for repository work.
@@ -136,7 +148,7 @@ Pass actual artifacts forward: plans, diffs, files, test output, commits, or pro
 - Pass a plan only when it names affected surfaces, decisions, risks, bounded execution slices, acceptance checks, and an integration path.
 - Pass implementation only when requested behavior exists, focused tests pass, and unrelated user changes remain untouched.
 - Pass review only when each actionable finding is fixed and rechecked or rejected with evidence.
-- Pass mechanical closeout only when the exact required checks ran and their results are recorded.
+- Pass mechanical closeout only when the exact required checks ran, accepted changes have checkpoint commits, authorized pushes succeeded or are explicitly reported as deferred or blocked, and the results are recorded.
 - Pass release only when it was explicitly authorized and the deployed revision and health evidence are known.
 
 Allow only one child to write to a checkout at a time. Parallelize read-only investigation or independent worktree tasks only when ownership is disjoint and the integration gate is explicit.
@@ -155,12 +167,14 @@ Allow only one child to write to a checkout at a time. Parallelize read-only inv
 
 Create a Luna release phase only when the user explicitly authorized release or deployment. Require Luna to follow the repository's existing release documentation and settled revision. If release evidence creates a new judgment call, stop the release and return the evidence to Sol; use Terra for any remediation.
 
+Push authority does not authorize opening a pull request, merging, releasing, or deploying. Treat each of those as a separate external action.
+
 ## Report the completed orbit
 
 Lead with the outcome. Then report:
 
 - the actual child task IDs, models, efforts, and phase results;
-- artifacts produced and checks passed;
+- artifacts produced, checks passed, task branch, checkpoint commits, and push state;
 - skipped phases, substitutions, retries, and escalations with reasons;
 - deployment revision and health evidence when release was authorized;
 - remaining blockers or risks.

@@ -39,6 +39,14 @@ Independent slices receive fresh children. A context-heavy child that stops befo
 
 Orbit does not limit a route to one thread per model. A substantial feature may use several fresh Terra children, each owning a different bounded slice, followed by separate Sol review and Luna verification children. Thread count follows the work; checkout write safety determines whether those children run sequentially or in isolated worktrees.
 
+## Branches and checkpoints
+
+Repository-writing runs stay off `main` and `master` unless the user explicitly asks to work there. Orbit normally creates or reuses a descriptive `codex/<task-slug>` branch in the current checkout. It uses separate worktrees only for disjoint parallel write slices or when the active checkout must remain untouched, with an explicit integration gate before those changes are accepted.
+
+Each accepted implementation slice or meaningful integrated milestone becomes a scoped checkpoint commit after its focused checks pass. Orbit stages only task-owned paths and records the commit hash for the next handoff. With explicit push authority, it pushes every accepted checkpoint to the task branch and sets the upstream on the first push. Without that authority, local work and commits continue while pushing remains deferred.
+
+A request to use Orbit does not by itself authorize a push. Push permission also does not authorize opening a pull request, merging, releasing, or deploying.
+
 ## Default routes
 
 ```text
@@ -105,6 +113,12 @@ Use GPT-5.6 Orbit to implement this feature and verify it.
 
 A direct request to use Orbit authorizes the visible child tasks needed by the route. An incidental implicit match does not. Neither form authorizes deployment, publication, destructive operations, or other external side effects.
 
+To enable the standard remote checkpoint cadence, include push authority in the request:
+
+```text
+Use GPT-5.6 Orbit to implement this feature, committing and pushing each accepted checkpoint.
+```
+
 ### Troubleshooting discovery
 
 If Codex says Orbit is unavailable:
@@ -132,6 +146,8 @@ If these controls are unavailable, Orbit returns the proposed route and stops. I
 - Terra performs most development work.
 - Luna performs deterministic and mechanical work.
 - Only one child writes to a checkout at a time.
+- Repository writes use a task branch by default; separate worktrees are reserved for isolated parallel writes.
+- Accepted slices become scoped checkpoint commits, and authorized checkpoints are pushed as they pass.
 - Dependent phases wait for actual artifacts, not summaries.
 - Load the skill once per root task; do not spend tokens rereading it on every turn.
 - Small corrections stay with a focused child; independent slices and overloaded contexts get fresh children.
