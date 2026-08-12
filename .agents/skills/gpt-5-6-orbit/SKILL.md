@@ -41,7 +41,7 @@ Read [references/effort-guide.md](references/effort-guide.md) before deviating f
 
 1. Restate the outcome, acceptance checks, constraints, allowed mutations, and external-action authority.
 2. Confirm the required task tools and the exact Sol, Terra, and Luna model IDs are available. Never silently substitute another model or lower an effort.
-3. Resolve the repository project and record its branch, revision, remote, push authority, and pre-existing dirty files. For a non-repository task, use a projectless child target.
+3. Check the working target with `git rev-parse --is-inside-work-tree`. Only when it succeeds and returns `true`, resolve the repository project and record its branch, revision, remote, push authority, and pre-existing dirty files. Otherwise classify the target as non-repository and use a projectless child target.
 4. Classify the task:
    - **Mechanical:** the operation and finish line are already known.
    - **Standard:** implementation is clear but requires real coding and tests.
@@ -95,6 +95,7 @@ Do not impose one-thread-per-model or a fixed child-count cap. Create one fresh 
 
 ## Checkpoint version control
 
+- Apply this section only when preflight confirmed a Git worktree. For a non-repository target, skip all branch, worktree, commit, remote, and push behavior; do not initialize a repository solely to create checkpoints.
 - Keep repository-writing work off `main` and `master` unless the user explicitly asks to work there. If the checkout is already on a non-default task branch intended for the request, keep it. Otherwise create a descriptive `codex/<task-slug>` branch before the first edit.
 - Prefer a branch in the current checkout for the normal sequential route. Use a separate worktree with its own branch only for disjoint parallel write slices or when the current checkout must remain untouched; require an explicit integration gate before accepting worktree output.
 - Preserve pre-existing dirty files. Stage only explicit task paths, inspect the staged diff, and never absorb unrelated user changes into a checkpoint.

@@ -41,6 +41,8 @@ Orbit does not limit a route to one thread per model. A substantial feature may 
 
 ## Branches and checkpoints
 
+Orbit first checks whether the working target is inside a Git worktree. Non-repository tasks skip all branch, worktree, commit, remote, and push behavior; Orbit does not initialize a repository just to create checkpoints.
+
 Repository-writing runs stay off `main` and `master` unless the user explicitly asks to work there. Orbit normally creates or reuses a descriptive `codex/<task-slug>` branch in the current checkout. It uses separate worktrees only for disjoint parallel write slices or when the active checkout must remain untouched, with an explicit integration gate before those changes are accepted.
 
 Each accepted implementation slice or meaningful integrated milestone becomes a scoped checkpoint commit after its focused checks pass. Orbit stages only task-owned paths and records the commit hash for the next handoff. With explicit push authority, it pushes every accepted checkpoint to the task branch and sets the upstream on the first push. Without that authority, local work and commits continue while pushing remains deferred.
